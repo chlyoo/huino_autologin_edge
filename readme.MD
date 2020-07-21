@@ -17,7 +17,7 @@ https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/#downloads
 <li>Make config.py file on the same directory level.</li>
 </ol>
 <b>Example config.py</b><br>
-<code>user_id='###@###.com'  ## id for website</code>
-<code>user_pw='########'   ## pw for website</code>
-<code>user_number='1804' ## you have to find your user number with QRcode</code>
-<code>course_number='77' ## You can check this on title when you login<br></code>
+<code>user_id='###@###.com'  ## id for website</code><br>
+<code>user_pw='########'   ## pw for website</code><br>
+<code>user_number='1804' ## you have to find your user number with QRcode</code><br>
+<code>course_number='77' ## You can check this on title when you login<br></code><br>
