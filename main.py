@@ -1,3 +1,4 @@
+import win32gui
 from selenium import webdriver
 import os
 import re
@@ -38,10 +39,9 @@ def zoom_link_connect(wd,test=True):
     else:
         a=wd.find_element_by_id(str(datetime.now().date())).text
     try:
-        zoomurl=re.search("(?P<url>https?://[^\s]+)", a).group("url")
+        zoomurl=re.search("(?P<url>https?://zoom[^\s]+)", a).group("url")
     except:
         zoom_link_connect(wd,test)
-    #wd.get(zoomurl)
     os.system('start {}'.format(zoomurl))
 
 def automa(test=False):
@@ -50,13 +50,15 @@ def automa(test=False):
     attend_class(wd,test)
 
 
-automa(test=False)
+#automa(test=False)
 schedule.every().monday.at("09:50").do(automa)
 schedule.every().tuesday.at("09:50").do(automa)
 schedule.every().wednesday.at("09:50").do(automa)
 schedule.every().thursday.at("09:50").do(automa)
 schedule.every().friday.at("09:50").do(automa)
 
+window=win32gui.FindWindow('ConsoleWindowClass', None)# int value
+win32gui.ShowWindow(window, 0)
 while True:
     schedule.run_pending()
-    time.sleep(30)
+    time.sleep(3)
