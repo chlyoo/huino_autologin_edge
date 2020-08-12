@@ -1,12 +1,10 @@
 import win32gui
 from selenium import webdriver
-import os
-import re
+import  schedule
+import os, re, sys,  time, random
 from config import *
 from datetime import datetime
-import schedule
-import time
-import random
+
 def login(wd):
     #login_page
     wd.get('http://lms.aiha.kr/')
@@ -42,23 +40,34 @@ def zoom_link_connect(wd,test=True):
         zoomurl=re.search("(?P<url>https?://zoom[^\s]+)", a).group("url")
     except:
         zoom_link_connect(wd,test)
+        print('zoom success')
+        return 0
     os.system('start {}'.format(zoomurl))
+    return 0
 
 def automa(test=False):
     wd = webdriver.Edge("edgedriver/msedgedriver.exe")
     login(wd)
     attend_class(wd,test)
 
-
+def schedulerrr():
+    schedule.every().monday.at("09:56").do(automa)
+    schedule.every().tuesday.at("09:56").do(automa)
+    schedule.every().wednesday.at("09:56").do(automa)
+    schedule.every().thursday.at("09:56").do(automa)
+    schedule.every().friday.at("09:56").do(automa)
+    window=win32gui.FindWindow('ConsoleWindowClass', None)# int value
+    win32gui.ShowWindow(window, 0)
+    while True:
+        schedule.run_pending()
+        time.sleep(3)
 #automa(test=False)
-schedule.every().monday.at("09:50").do(automa)
-schedule.every().tuesday.at("09:50").do(automa)
-schedule.every().wednesday.at("09:50").do(automa)
-schedule.every().thursday.at("09:50").do(automa)
-schedule.every().friday.at("09:50").do(automa)
-
-window=win32gui.FindWindow('ConsoleWindowClass', None)# int value
-win32gui.ShowWindow(window, 0)
-while True:
-    schedule.run_pending()
-    time.sleep(3)
+if datetime.today().weekday()<=4:
+    if str(datetime.now().time())>='17:00':
+        sys.exit()
+    elif str(datetime.now().time())<='09:55':
+        schedulerrr()
+    else:
+        automa()
+else:
+    sys.exit()
